@@ -1,0 +1,59 @@
+﻿@model CapaModelo.Result
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1 class="card-title">Registro datos </h1>
+<h6 class="card-subtitle text-muted">Información transformarda y registraa en la base de datos</h6>
+<hr />
+
+@if (Model != null)
+{
+    @Html.ActionLink(" Descargar", "DescargarReporte", "CargaMasiva", new { area = "" }, new { @class = "btn btn-success bi bi-arrow-left-square" })
+    <br />
+    <table id="myTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                
+                <td>company_id</td>
+                <td>company_name</td>
+                <td>created_at</td>
+                <td>Total</td>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (CapaModelo.VistaTotal obj in Model.Objects)
+            {
+                <tr>
+                    <td>@obj.Cargo.CompanyId</td>
+                    <td>@obj.Cargo.Name</td>
+                    <td>@obj.Cargo.CreatedAt</td>
+                    <td>@obj.Total</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+@section Scripts{
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
+   
+    <script>
+        $.noConflict();
+        jQuery(document).ready(function ($) {
+            $('#myTable').DataTable();
+        });
+            // Code that uses other library's $ can follow here.
+    </script>
+}
+

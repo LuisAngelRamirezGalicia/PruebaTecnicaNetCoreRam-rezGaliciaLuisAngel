@@ -1,0 +1,88 @@
+﻿@model CapaModelo.Error
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+
+    <h1 class="card-title">Carga masiva de datos </h1>
+    <h6 class="card-subtitle text-muted">Ingrese Un archivo tipo csv para ingresarlo en la Base de Datos</h6>
+    <hr />
+
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-9">
+                <input type="file" name="file" id="fileInput" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <input type="submit" class="form-control btn btn-primary bi bi-database" value=" Cargar Archivo"/>
+            </div>
+        </div>
+
+    </form>
+    
+    <br />
+
+    @if (Model != null)
+    {
+        <table class="table table-bordered table-responsive display" id="myTable">
+            <thead>
+                <tr>
+
+                    <td>Registro</td>
+                    <td>Error</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (CapaModelo.Error error in Model.Errores)
+                {
+                    <tr>
+
+                        <td>@error.IdRow</td>
+                        <td>@error.MensajeDeError</td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @Html.ActionLink(" Descargar", "DescargarErrores", "CargaMasiva", new { area = "" }, new { @class = "btn btn-success bi bi-download" })
+
+    }
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+    <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                    <p class="mt-2">Cargando archivo...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    $(function () {
+        $('#uploadForm').submit(function () {
+            $('#loadingModal').modal('show'); // Mostrar modal de carga al enviar el formulario
+        });
+    });
+
+</script>
